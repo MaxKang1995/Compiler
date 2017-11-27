@@ -1,0 +1,225 @@
+=== Instructions ===
+LABEL label_1
+ASG   ii, 0
+LABEL label_2
+SUB   #0, max, 1
+BGT   label_3, ii, #0
+OFF   #1, arri, ii
+ASG   #1, m
+ADD   #2, m, 1
+ASG   m, #2
+ADD   ii, ii, 1
+JMP   label_2
+LABEL label_3
+WRITE "arrI set value from "
+SUB   #3, m, 10
+WRITE #3
+WRITE " to "
+WRITE m
+RET   setarri
+
+LABEL label_4
+ASG   ii, 0
+LABEL label_5
+SUB   #4, max, 1
+BGT   label_6, ii, #4
+OFF   #5, arri, ii
+ASG   #5, m
+ADD   ii, ii, 1
+JMP   label_5
+LABEL label_6
+ASG   ii, 0
+LABEL label_7
+SUB   #6, max, 1
+BGT   label_8, ii, #6
+WRITE " "
+SEL   #7, arri, ii
+WRITE #7
+ADD   ii, ii, 1
+JMP   label_7
+LABEL label_8
+RET   getarri
+
+LABEL label_9
+ASG   ii, 0
+LABEL label_10
+SUB   #8, max, 1
+BGT   label_11, ii, #8
+SEL   #9, arrc, ii
+WRITE #9
+ADD   ii, ii, 1
+JMP   label_10
+LABEL label_11
+RET   printarrc
+
+LABEL label_0
+BNE   label_13, t, 1
+SAVE  
+PUSH  setarri, 1, m
+CALP  label_1
+JMP   label_12
+LABEL label_13
+BNE   label_14, t, 2
+SAVE  
+CALP  label_4
+JMP   label_12
+LABEL label_14
+BNE   label_15, t, 3
+SAVE  
+CALP  label_9
+JMP   label_12
+LABEL label_15
+LABEL label_12
+RET   sequence
+
+LABEL label_16
+BNE   label_17, m, n
+WRITE "number1 = number2   "
+LABEL label_17
+BGT   label_18, m, n
+WRITE "number1 <= number2   "
+LABEL label_18
+BLT   label_19, m, n
+WRITE "number1 >= number2   "
+LABEL label_19
+BEQ   label_20, m, n
+WRITE "number1 <> number2   "
+LABEL label_20
+WRITE " "
+ADD   #10, m, n
+WRITE #10
+WRITE " "
+SUB   #11, m, n
+WRITE #11
+WRITE " "
+MUL   #12, m, n
+WRITE #12
+BEQ   label_21, n, 0
+WRITE " "
+DIV   #13, m, n
+WRITE #13
+LABEL label_21
+RET   calculate
+
+LABEL label_22
+WRITE "initializing   @@@   "
+ASG   a, 0
+ASG   b, 0
+ASG   c, con4
+ASG   d, con4
+SUB   #14, max, 1
+ASG   ii, #14
+LABEL label_23
+BLT   label_24, ii, 0
+OFF   #15, arri, ii
+ASG   #15, 1
+OFF   #16, arrc, ii
+ASG   #16, con3
+ADD   ii, ii, -1
+JMP   label_23
+LABEL label_24
+WRITE "const CON1 = "
+WRITE con1
+WRITE "   CON2 = "
+WRITE con2
+WRITE "   CON3 = "
+WRITE con3
+WRITE "   CON4 = "
+WRITE con4
+WRITE "   @@@   initialization finished!   @@@   "
+RET   initiate
+
+LABEL label_25
+BNE   label_26, i, 1
+RVAL  1
+JMP   label_27
+LABEL label_26
+BNE   label_28, i, 2
+RVAL  1
+JMP   label_29
+LABEL label_28
+SAVE  
+SUB   #17, i, 1
+PUSH  fibonacci, 1, #17
+CALF  label_25, #18
+SAVE  
+SUB   #19, i, 2
+PUSH  fibonacci, 1, #19
+CALF  label_25, #20
+ADD   #21, #18, #20
+RVAL  #21
+LABEL label_29
+LABEL label_27
+RET   fibonacci
+
+LABEL entry
+SAVE  
+CALP  label_22
+WRITE "function 1   @@@   "
+WRITE "result : "
+ADD   #22, a, 1
+SEL   #23, arri, #22
+NEG   #24, con3
+ADD   #25, con3, 1
+ADD   #26, #24, #25
+MUL   #27, #23, #26
+SEL   #28, arri, 9
+SAVE  
+PUSH  fibonacci, 1, 2
+CALF  label_25, #29
+NEG   #30, #29
+DIV   #31, #28, #30
+SUB   #32, #27, #31
+WRITE #32
+WRITE "   @@@   "
+WRITE "function 2   @@@   "
+WRITE "number1 : "
+READ  a
+WRITE "   number2 : "
+READ  b
+SAVE  
+PUSH  calculate, 1, a
+PUSH  calculate, 2, b
+CALP  label_16
+WRITE "   @@@   "
+WRITE "function 3   @@@   "
+WRITE "input number between 1 and 20 : "
+READ  a
+WRITE "   @@@   "
+BLE   label_30, a, 20
+WRITE "over number bound [1, 20]"
+JMP   label_31
+LABEL label_30
+BGE   label_32, a, 1
+WRITE "over number bound [1, 20]"
+JMP   label_33
+LABEL label_32
+WRITE "the fibonacci number is : "
+SAVE  
+PUSH  fibonacci, 1, a
+CALF  label_25, #33
+WRITE #33
+LABEL label_33
+LABEL label_31
+WRITE "   @@@   "
+WRITE "function 4   @@@   "
+WRITE "number3 : "
+READ  a
+WRITE "number4(1|2|3) : "
+READ  b
+BGE   label_34, b, 1
+WRITE "wrong type"
+JMP   label_35
+LABEL label_34
+BLE   label_36, b, 3
+WRITE "wrong type"
+JMP   label_37
+LABEL label_36
+SAVE  
+PUSH  sequence, 1, a
+PUSH  sequence, 2, b
+CALP  label_0
+LABEL label_37
+LABEL label_35
+WRITE "   @@@   "
+WRITE "END"

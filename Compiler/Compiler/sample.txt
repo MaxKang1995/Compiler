@@ -1,0 +1,18 @@
+const max = 10,min = -1;mid = -5;
+var i ,result, input : integer;
+    nums: array[10] of integer;
+    chars:array[20] of char;    
+    function add(a,b:integer) : integer;
+        var i,j:integer;
+        begin
+            i := b;
+            add:= a +b
+        end;
+begin
+    nums[0] := 1;
+    nums[1] := 1;
+    for i := 2 to max - 1 do
+        nums[i] := add(nums[i-1],nums[i-2]);
+    for i := 0 to max - 1 do
+        write(" ", nums[i]);
+end.

@@ -1,0 +1,119 @@
+=== Instructions ===
+LABEL label_0
+ADD   #0, c, 6
+ASG   c, #0
+RET   testmulti
+
+LABEL label_1
+ADD   #1, b, 1
+ASG   b, #1
+WRITE "|"
+WRITE b
+SAVE  
+PUSH  testmulti, 1, b
+CALP  label_0
+RET   testvar
+
+LABEL label_2
+ASG   b, c
+NEG   #2, c
+ASG   c, #2
+NEG   #3, c
+BNE   label_3, b, #3
+WRITE "|success neg"
+LABEL label_3
+ASG   a, 97
+WRITE "|a:"
+WRITE a
+DIV   #4, 12, c
+ASG   j, #4
+WRITE "|j:"
+WRITE j
+MUL   #5, vara, j
+ADD   #6, a, #5
+ASG   c, #6
+WRITE "|c:"
+WRITE c
+RET   testpara
+
+LABEL label_4
+RVAL  999
+RET   testfuncreturn
+
+LABEL label_5
+BNE   label_6, b, 1
+WRITE "|"
+WRITE b
+JMP   label_7
+LABEL label_6
+WRITE "|"
+WRITE b
+SAVE  
+SUB   #7, b, 1
+PUSH  f, 1, #7
+CALP  label_5
+LABEL label_7
+RET   f
+
+LABEL label_8
+ASG   vara, 1
+LABEL label_9
+BGT   label_10, vara, 10
+WRITE "|"
+WRITE vara
+ADD   vara, vara, 1
+JMP   label_9
+LABEL label_10
+RET   testfor
+
+LABEL label_11
+WRITE "|"
+WRITE vara
+SUB   #8, vara, 1
+ASG   vara, #8
+RET   testdo
+
+LABEL entry
+ASG   vara, 0
+SAVE  
+PUSH  testvar, 1, vara
+CALP  label_1
+WRITE "|vara:"
+WRITE vara
+SAVE  
+CALF  label_4, #9
+ASG   vara, #9
+BNE   label_12, vara, 999
+WRITE "|success fun return"
+JMP   label_13
+LABEL label_12
+WRITE "|fail fun return"
+LABEL label_13
+SAVE  
+PUSH  testpara, 1, 4
+PUSH  testpara, 2, 6
+PUSH  testpara, 3, constchar
+CALP  label_2
+SAVE  
+PUSH  f, 1, 8
+CALP  label_5
+OFF   #10, arr, 1
+ASG   #10, 6
+OFF   #11, arr, 2
+SEL   #12, arr, 1
+SEL   #13, arr, 1
+MUL   #14, #12, #13
+ASG   #11, #14
+WRITE "|arr[1]:"
+SEL   #15, arr, 1
+WRITE #15
+WRITE "|arr[2]:"
+SEL   #16, arr, 2
+WRITE #16
+SAVE  
+CALP  label_8
+SAVE  
+CALP  label_11
+READ  vara
+WRITE "|readint vara:"
+WRITE vara

@@ -1,0 +1,151 @@
+const c1=+01,c2=-02,c3='x',ca='a',cb='b',cc='c',c4='0';
+var va,vb,iter:integer;
+    vc,vd:char;
+    arri:array[10] of integer;
+    arrc:array[10] of char;
+
+procedure init;
+begin
+    for iter:=9 downto 0 do
+    begin
+        arri[iter]:=iter;
+        arrc[iter]:=c3;
+    end;
+    write("init   c1=",c1);
+    write("   c2=",c2);
+    write("   c3=",c3);
+    write("   c4=",c4);
+    write("   ||   ");
+end;
+
+procedure test1(num:integer; type:integer; c:char);
+    const max=10;
+
+    procedure output1(n:integer; ch:char);
+    begin
+        if n>max then
+            write("number must be less than 11!")
+        else
+            if n <1 then
+                write("number must be greater than 0!")
+            else
+                for iter:=1 to n do
+                    write(c);
+    end;
+
+    procedure output2;
+    begin
+        for iter:=0 to 9 do
+        begin
+            write(" arri[",iter);
+            write("]=", arri[iter])
+        end
+    end;
+
+    procedure output3;
+    begin
+        for iter:=0 to 9 do
+            write(arrc[iter]);
+    end;
+
+begin
+    write("   ||   call test1   ||   ");
+    case type of 
+        1:output1(num,c);
+        2:output2;
+        3:output3
+    end
+end;
+
+procedure hanoi(var count:integer;n:integer;p1,p2,p3:char);
+    procedure move(p1,p2:char);
+    begin
+        write(" move ",p1);
+        write(" to ",p2);
+        write(";")
+    end;
+begin
+    if n=1 then
+    begin
+        move(p1,p3);
+        count:=count+1
+    end
+    else
+    begin
+        hanoi(count,n-1,p1,p3,p2);
+        move(p1,p3);
+	  write(" ", va);
+	  write(" ");
+        count:=count+1;
+        hanoi(count,n-1,p2,p1,p3)
+    end
+end;
+    
+
+function add(var a:integer):integer;
+begin
+    add:=a+1;
+    a:=a+1
+end;
+
+begin
+    ;
+    ;
+    init;
+
+
+    write("Start test1   ||");
+    write("   type = ");
+    read(va);
+    write("   ||   num = ");
+    read(vb);
+    write("   ||   ch = ");
+    read(vc);
+    test1(vb,va,vc);
+
+
+    write("   ||   Start test2   ||   result=");
+    va:=5;
+    write(-arri[add(va)]-va*(+10+vb)/(-2));
+
+    write("   ||   Start test3   ||");
+    write("   va = ");
+    read(va);
+    write("   ||   vb = ");
+    read(vb);
+    write("   ||   ");
+    if va=vb then
+        write("va = vb   ")
+    else
+        if va<=vb then
+            write("va <= vb   ")
+        else
+            if va >= vb then
+                write("va >= vb   ");
+    if va<> vb then
+        write("va <> vb");
+
+
+    write("   || Start test4   ||");
+    write("   num of Hanoi plates = ");
+    read(va);
+    write("   ||   ");
+    if va>5 then
+        write("num must be less than 6!")
+    else
+    begin
+        if va<1 then
+            write("num must be greater than 0!")
+
+        else
+        begin
+            vb:=0;
+            hanoi(vb,va,ca,cb,cc);
+            write(" solve the quiz with total ",vb);
+            write(" step(s)   ")
+        end
+    end;
+
+
+    write("   ||   End of all tests")
+end.
